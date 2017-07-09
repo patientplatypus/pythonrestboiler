@@ -23,14 +23,14 @@
 ## Two routes defined in the sample
 
 ### /todo
-##### metod (Post)
+##### method (Post)
 ![Alt text](http://blog.roshanraj.com/images/post.png "Post")
-##### metod (get)
+##### method (get)
 ![Alt text](http://blog.roshanraj.com/images/get.png "Get")
 
 
 ### /todo/<todo id>
-##### metod (Get)
+##### method (Get)
 ![Alt text](http://blog.roshanraj.com/images/withid.png "Get")
-##### metod (Put)
+##### method (Put)
 ![Alt text](http://blog.roshanraj.com/images/put.png "Put")
