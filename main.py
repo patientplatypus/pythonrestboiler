@@ -28,8 +28,21 @@ conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.
 cur = conn.cursor()
 q = """CREATE TABLE IF NOT EXISTS logins (
          username  VARCHAR(255),
-         password  VARCHAR(255))"""
+         password  VARCHAR(255),
+         totalmoney bigint,
+         userid bigint,
+         PRIMARY KEY (userid));"""
 cur.execute(q)
+conn.commit()
+r = """CREATE TABLE IF NOT EXISTS pictures (
+         urladdress  VARCHAR(255),
+         boughtfor  VARCHAR(255),
+         soldfor  VARCHAR(255),
+         currentprice VARCHAR(255),
+         pictureid bigint,
+         userref bigint REFERENCES logins(userid),
+         PRIMARY KEY (pictureid, userref));"""
+cur.execute(r)
 conn.commit()
 conn.close()
 
@@ -42,7 +55,26 @@ app.register_blueprint(login_api)
 from routes.register import register_api
 app.register_blueprint(register_api)
 
+from routes.uploadpicture import uploadpicture_api
+app.register_blueprint(uploadpicture_api)
 
+from routes.retrievepictures import retrievepictures_api
+app.register_blueprint(retrievepictures_api)
+
+from routes.changeprice import changeprice_api
+app.register_blueprint(changeprice_api)
+
+from routes.retrieveuserinfo import retrieveuserinfo_api
+app.register_blueprint(retrieveuserinfo_api)
+
+from routes.buypictures import buypictures_api
+app.register_blueprint(buypictures_api)
+
+from routes.allusers import allusers_api
+app.register_blueprint(allusers_api)
+
+from routes.buyfromothers import buyfromothers_api
+app.register_blueprint(buyfromothers_api)
 
 @app.route('/')
 def hello_world():

@@ -7,13 +7,14 @@ from flask_cors import CORS, cross_origin
 import psycopg2
 import os
 from os.path import join, dirname
+import time
 
 
 print('inside the register.py file')
 register_api = Blueprint('register_api', __name__)
 
 @register_api.route('/register', methods=['POST'])
-def login():
+def register():
     print('inside register def')
     if request.method=='POST':
         conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
@@ -27,11 +28,12 @@ def login():
         if len(data) == 0:
             conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
             cur = conn.cursor()
-            sql = 'INSERT INTO "logins" (USERNAME, PASSWORD) VALUES (%s,  %s)'
-            params = (request.json['name'], request.json['password'])
+            millisecondtime =  time.time() * 1000
+            sql = 'INSERT INTO "logins" (USERNAME, PASSWORD, TOTALMONEY, USERID) VALUES (%s,  %s, %s, %s)'
+            params = (request.json['name'], request.json['password'], 100, millisecondtime)
             cur.execute(sql, params)
             conn.commit()
             conn.close()
-            return 'user successfully added to database'
+            return 'usersuccessfullyadded'
         if len(data) > 0:
-            return 'user already exists! did not add user'
+            return 'useralreadyexists'

@@ -6,17 +6,17 @@ from flask_cors import CORS, cross_origin
 import psycopg2
 import os
 from os.path import join, dirname
-
+import time
 
 # from main import app
 # from CORSFIX import crossdomain
 
-print('inside the login.py file')
-login_api = Blueprint('login_api', __name__)
+print('inside the retrievepictures.py file')
+retrievepictures_api = Blueprint('retrievepictures_api', __name__)
 
-@login_api.route('/login', methods=['POST'])
-def login():
-    print('inside login def')
+@retrievepictures_api.route('/retrievepictures', methods=['POST'])
+def retrievepictures():
+    print('inside retrievepictures def')
     if request.method=='POST':
         conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
         cur = conn.cursor()
@@ -25,13 +25,15 @@ def login():
         cur.execute(sql, params)
         conn.commit()
         data = cur.fetchall()
+        print(data)
+        dataclean = data[0]
+        print(dataclean[3])
+        datasearch = dataclean[3]
+        sql = 'SELECT * FROM pictures WHERE userref = %s'
+        params = (datasearch,)
+        cur.execute(sql, params)
+        picturedata = cur.fetchall()
+        print(picturedata)
+        conn.commit()
         conn.close()
-        if len(data) > 0:
-            dataclean = data[0]
-            databasepassword = dataclean[1]
-            if databasepassword == request.json['password']:
-                return 'passwordsmatch'
-            if databasepassword != request.json['password']:
-                return 'passwordsdontmatch'
-        if len(data) == 0:
-            return 'usernamenotfound'
+        return jsonify({'pictures': picturedata})
