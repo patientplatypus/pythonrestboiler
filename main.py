@@ -76,6 +76,9 @@ app.register_blueprint(allusers_api)
 from routes.buyfromothers import buyfromothers_api
 app.register_blueprint(buyfromothers_api)
 
+from routes.allpicturesforsale import allpicturesforsale_api
+app.register_blueprint(allpicturesforsale_api)
+
 @app.route('/')
 def hello_world():
     return 'Hello, World!'

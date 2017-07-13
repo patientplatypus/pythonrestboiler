@@ -22,12 +22,19 @@ def buyfromothers():
         conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
         cur = conn.cursor()
         sql = 'SELECT * FROM logins WHERE username = %s'
+        print('this is the name value: ', request.json['name'])
         params = (request.json['name'],)
         cur.execute(sql, params)
         conn.commit()
         userdata = cur.fetchall()
-        print('this is the userdata', userdata)
-        sql = 'SELECT * FROM logins WHERE username = %s'
+        # print('this is the userdata', userdata)
+        # print('this is the type of request.json[othername]', type(request.json['othername']))
+        # if type(request.json['othername'])==type(1):
+        #     print('hello there sailor')
+        if  type(request.json['othername'])==type(1):
+            sql = 'SELECT * FROM logins WHERE userid = %s'
+        if  type(request.json['othername'])!=type(1):
+            sql = 'SELECT * FROM logins WHERE username = %s'
         params = (request.json['othername'],)
         cur.execute(sql, params)
         conn.commit()
@@ -49,7 +56,10 @@ def buyfromothers():
             params = (lessmoney, request.json['name'],)
             cur.execute(sql, params)
             conn.commit()
-            sql = 'UPDATE logins SET totalmoney = %s WHERE username = %s'
+            if type(request.json['othername'])==type(1):
+                sql = 'UPDATE logins SET totalmoney = %s WHERE userid = %s'
+            if type(request.json['othername'])!=type(1):
+                sql = 'UPDATE logins SET totalmoney = %s WHERE username = %s'
             params = (moremoney, request.json['othername'],)
             cur.execute(sql, params)
             conn.commit()
