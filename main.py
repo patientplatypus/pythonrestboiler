@@ -8,6 +8,35 @@ from os.path import join, dirname
 import sys
 import psycopg2
 # from CORSFIX import crossdomain
+from timed.inflation import Inflate
+# from timed.inflation import Typewriter
+# from timed.inflation import Dog
+import threading
+
+# from celeryconfig import make_celery
+
+
+
+
+
+# i = Inflate()
+# i.timermethod('pants')
+# d = Dog('Fido')
+# e = Dog('Buddy')
+# d.add_trick('roll over')
+# e.add_trick('play dead')
+# d.tricks
+#
+# e.tricks
+
+# typer = Typewriter('hello there sailor')
+# typer.start()
+
+
+
+i = Inflate('pants')
+i.timermethod()
+
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -16,6 +45,19 @@ app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = '%s://%s:%s@%s/%s' % (os.environ.get('DB_DRIVER'), os.environ.get('DB_USER'), os.environ.get('DB_PASSWORD'), os.environ.get('DB_HOST'), os.environ.get('DB_NAME'))
 
+# app.config.update(
+#     CELERY_BROKER_URL='redis://localhost:6379',
+#     CELERY_RESULT_BACKEND='redis://localhost:6379'
+# )
+# celery = make_celery(app)
+
+# @celery.task()
+# def add_together(a, b):
+#     return a + b
+
+
+# result = add_together.delay(23, 42)
+# result.wait()
 
 db = SQLAlchemy()
 
@@ -45,6 +87,10 @@ r = """CREATE TABLE IF NOT EXISTS pictures (
 cur.execute(r)
 conn.commit()
 conn.close()
+
+
+
+
 
 
 

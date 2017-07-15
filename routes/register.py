@@ -1,5 +1,3 @@
-
-from models.todo import TODOS
 from flask_restful import abort, reqparse, Resource
 from marshmallow import Schema, fields, ValidationError, pre_load
 from flask import Flask, Blueprint, request, jsonify
