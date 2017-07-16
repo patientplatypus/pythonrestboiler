@@ -128,6 +128,13 @@ def hello_world():
     return 'Hello, World!'
 
 
+# the following works for running on local host
+# if __name__ == '__main__':
+#     app.run(debug=True)
 
+# the following is recommended to use in order to get this to work on heroku
+# (step 7 of here http://kennmyers.github.io/tutorial/2016/03/11/getting-flask-on-heroku.html)
 if __name__ == '__main__':
-    app.run(debug=True)
+     app.debug = True
+     port = int(os.environ.get("PORT", 5000))
+     app.run(host='0.0.0.0', port=port)
