@@ -89,11 +89,6 @@ conn.commit()
 conn.close()
 
 
-
-
-
-
-
 print('inide the main file')
 from routes.login import login_api
 app.register_blueprint(login_api)
@@ -124,6 +119,9 @@ app.register_blueprint(buyfromothers_api)
 
 from routes.allpicturesforsale import allpicturesforsale_api
 app.register_blueprint(allpicturesforsale_api)
+
+from routes.deletepicture import deletepicture_api
+app.register_blueprint(deletepicture_api)
 
 @app.route('/')
 def hello_world():
