@@ -8,7 +8,7 @@ from os.path import join, dirname
 import threading
 from time import sleep
 import math
-
+from urlparse import urlparse
 # DB_DRIVER=postgresql
 # DB_HOST=localhost
 # DB_USER=patientplatypus
@@ -24,7 +24,21 @@ class Inflate:
     def inflatemethod(self):
         while 1 > 0:
             # conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
-            conn = psycopg2.connect(database = 'pictureswapper', user = 'patientplatypus', password = 'Fvnjty0b')
+
+            urlparse.uses_netloc.append("postgres")
+            url = urlparse.urlparse(os.environ["postgresql-rugged-56632"])
+
+            conn = psycopg2.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+            )
+
+
+
+            # conn = psycopg2.connect(database = 'pictureswapper', user = 'patientplatypus', password = 'Fvnjty0b')
             cur = conn.cursor()
             sql = 'SELECT * FROM logins'
             cur.execute(sql)
