@@ -15,8 +15,8 @@ import threading
 
 # from celeryconfig import make_celery
 
-from urlparse import urlparse
-
+import urlparse
+print(urlparse, type(urlparse)
 
 
 dotenv_path = join(dirname(__file__), '.env')
