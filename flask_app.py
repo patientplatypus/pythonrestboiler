@@ -19,10 +19,6 @@ from urlparse import urlparse
 
 
 
-i = Inflate('pants')
-i.timermethod()
-
-
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
@@ -72,6 +68,12 @@ r = """CREATE TABLE IF NOT EXISTS pictures (
 cur.execute(r)
 conn.commit()
 conn.close()
+
+
+
+i = Inflate('pants')
+i.timermethod()
+
 
 
 print('inide the main file')
