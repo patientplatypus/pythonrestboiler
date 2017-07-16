@@ -18,7 +18,17 @@ buyfromothers_api = Blueprint('buyfromothers_api', __name__)
 def buyfromothers():
     print('inside buyfromothers def')
     if request.method=='POST':
-        conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
+        urlparse.uses_netloc.append("postgres")
+        url = urlparse.urlparse(os.environ["postgresql-rugged-56632"])
+
+        conn = psycopg2.connect(
+            database=url.path[1:],
+            user=url.username,
+            password=url.password,
+            host=url.hostname,
+            port=url.port
+        )
+        # conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
         cur = conn.cursor()
         sql = 'SELECT * FROM logins WHERE username = %s'
         print('this is the name value: ', request.json['name'])

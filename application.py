@@ -15,22 +15,7 @@ import threading
 
 # from celeryconfig import make_celery
 
-
-
-
-
-# i = Inflate()
-# i.timermethod('pants')
-# d = Dog('Fido')
-# e = Dog('Buddy')
-# d.add_trick('roll over')
-# e.add_trick('play dead')
-# d.tricks
-#
-# e.tricks
-
-# typer = Typewriter('hello there sailor')
-# typer.start()
+import urlparse
 
 
 
@@ -42,31 +27,31 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 app = Flask(__name__)
-CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = '%s://%s:%s@%s/%s' % (os.environ.get('DB_DRIVER'), os.environ.get('DB_USER'), os.environ.get('DB_PASSWORD'), os.environ.get('DB_HOST'), os.environ.get('DB_NAME'))
-
-# app.config.update(
-#     CELERY_BROKER_URL='redis://localhost:6379',
-#     CELERY_RESULT_BACKEND='redis://localhost:6379'
-# )
-# celery = make_celery(app)
-
-# @celery.task()
-# def add_together(a, b):
-#     return a + b
+# CORS(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = '%s://%s:%s@%s/%s' % (os.environ.get('DB_DRIVER'), os.environ.get('DB_USER'), os.environ.get('DB_PASSWORD'), os.environ.get('DB_HOST'), os.environ.get('DB_NAME'))
+#
+#
+# db = SQLAlchemy()
+#
+# db.app = app
+# db.init_app(app)
+# # Create tables if they don't already exist
+# db.create_all()
 
 
-# result = add_together.delay(23, 42)
-# result.wait()
+# localhost uses this
+# conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["postgresql-rugged-56632"])
 
-db = SQLAlchemy()
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 
-db.app = app
-db.init_app(app)
-# Create tables if they don't already exist
-db.create_all()
-
-conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
 cur = conn.cursor()
 q = """CREATE TABLE IF NOT EXISTS logins (
          username  VARCHAR(255),
