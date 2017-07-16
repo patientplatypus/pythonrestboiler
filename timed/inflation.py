@@ -26,7 +26,7 @@ class Inflate:
             # conn = psycopg2.connect(database = os.environ.get('DB_NAME'), user = os.environ.get('DB_USER'), password = os.environ.get('DB_PASSWORD'))
 
             urlparse.uses_netloc.append("postgres")
-            url = urlparse.urlparse(os.environ["postgresql-rugged-56632"])
+            url = urlparse.urlparse(os.environ["DATABASE_URL"])
 
             conn = psycopg2.connect(
                 database=url.path[1:],
