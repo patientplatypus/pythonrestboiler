@@ -6,6 +6,7 @@ import psycopg2
 import os
 from os.path import join, dirname
 import time
+from urlparse import urlparse
 
 # from main import app
 # from CORSFIX import crossdomain

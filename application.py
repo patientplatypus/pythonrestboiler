@@ -15,7 +15,7 @@ import threading
 
 # from celeryconfig import make_celery
 
-import urlparse
+from urlparse import urlparse
 
 
 
