@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 import psycopg2
 import os
 from os.path import join, dirname
-from urlparse import urlparse
+import urlparse
 
 # from main import app
 # from CORSFIX import crossdomain

@@ -6,7 +6,7 @@ import psycopg2
 import os
 from os.path import join, dirname
 import time
-from urlparse import urlparse
+import urlparse
 
 
 print('inside the register.py file')

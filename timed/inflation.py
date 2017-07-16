@@ -8,7 +8,7 @@ from os.path import join, dirname
 import threading
 from time import sleep
 import math
-from urlparse import urlparse
+import urlparse
 # DB_DRIVER=postgresql
 # DB_HOST=localhost
 # DB_USER=patientplatypus
